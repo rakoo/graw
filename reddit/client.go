@@ -4,6 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"net/http"
+
+	"os"
+	"encoding/json"
 )
 
 // tokenURL is the url of reddit's oauth2 authorization service.
@@ -33,6 +36,7 @@ type baseClient struct {
 }
 
 func (b *baseClient) Do(req *http.Request) ([]byte, error) {
+	json.NewEncoder(os.Stdout).Encode(req)
 	resp, err := b.cli.Do(req)
 	if resp != nil && resp.Body != nil {
 		defer resp.Body.Close()
